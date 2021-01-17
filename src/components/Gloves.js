@@ -5,12 +5,12 @@ import { FixedSizeList as List } from "react-window"
 const Gloves = (props) => {
 
   return (
-    <div className="products-container">
+    <div className="container">
       <h3>Gloves</h3>
       <List
         height={window.screen.height}
         itemCount={props.gloves.length}
-        itemSize={350}
+        itemSize={360}
         width="100%"
       >
         {({ index, style }) => (

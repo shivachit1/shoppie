@@ -4,12 +4,12 @@ import Product from "./Product";
 const Beanies = (props) => {
  
   return (
-    <div className="products-container">
+    <div className="container">
       <h3>Beanies</h3>
       <List
         height={window.screen.height}
         itemCount={props.beanies.length}
-        itemSize={350}
+        itemSize={360}
         width="100%"
       >
           {({ index, style }) => 

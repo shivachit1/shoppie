@@ -4,12 +4,12 @@ import { FixedSizeList as List } from "react-window";
 const FaceMasks = (props) => {
 
   return (
-    <div className="products-container">
+    <div className="container">
       <h3>Face Masks</h3>
       <List
         height={window.screen.height}
         itemCount={props.faceMasks.length}
-        itemSize={350}
+        itemSize={360}
         width="100%"
       >
           {({ index, style }) => 

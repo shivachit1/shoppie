@@ -1,48 +1,57 @@
-import './App.css';
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Gloves from './components/Gloves';
-import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import FaceMasks from './components/FaceMasks';
-import Beanies from './components/Beanies';
+import { useEffect, useState } from "react"
+import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import axios from "axios"
+import Gloves from './components/Gloves'
+import Navbar from './components/Navbar'
+import FaceMasks from './components/FaceMasks'
+import Beanies from './components/Beanies'
+
 function App() {
-  const [beanies, setBeanies] = useState([]);
-  const [faceMasks, setFaceMasks] = useState([]);
-  const [gloves, setGloves] = useState([]);
-  const [manufacturers,setManuFacturers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  
+  const [gloves, setGloves] = useState([])
+  const [faceMasks, setFaceMasks] = useState([])
+  const [beanies, setBeanies] = useState([])
+  const [manufacturers,setManuFacturers] = useState([])
 
   useEffect(() => {
 
     const getData = async () =>{
+      // getting all gloves data from endpoint and saving to state
       const glovesData = await axios.get("v2/products/gloves")
       setGloves(glovesData.data)
-
+      
+      // getting all facemasks data from endpoint and saving to state
       const faceMasksData = await axios.get("v2/products/facemasks")
       setFaceMasks(faceMasksData.data)
 
+      // getting all beanies data from endpoint and saving to state
       const beaniesData = await axios.get("v2/products/beanies")
       setBeanies(beaniesData.data)
       
+      // getting distinct manufacturer names from Beanies data
       const manus = [...new Set(beaniesData.data.map(data => data.manufacturer))]
-      
+
+      // calling manufacturer api end points using array loop and promises
       Promise.all(manus.map(manu => getAvailability(manu)))
       .then(results => {
+        // saving all results to its app state
           setManuFacturers(results)
       })
       .catch(err => {
+        // error handling 
           console.log(err)
       })
-      .finally(()=>setLoading(false))
       
   }
 
+
     const getAvailability = async (manufacturName) => {
+      // calling api end point to get all products of manufacturer 
         let res = await axios.get(`v2/availability/${manufacturName}`)
+
+        // if the response is "[]" calling until the data is recieved
         while(res.data.response === "[]"){
           res = await axios.get(`v2/availability/${manufacturName}`)
-          console.log("response zero")
         }
         return {name:manufacturName,values:res.data.response}
     }
@@ -50,29 +59,19 @@ function App() {
 
     getData()
     
-  }, []);
-
-  if(loading){
-    return (
-      <div className="App">
-        <div className="nav">
-            <h3>Shoppie</h3>
-            <div>data is being loaded...</div>
-        </div>
-        
-        </div>
-    )
-  }
+  }, [])
 
   return (
     <div className="App">
       <Router>
-      <Navbar/>
-      <div>
-        <Route path="/gloves" render={()=><Gloves gloves={gloves} manufacturers={manufacturers}/>}/>
-        <Route path="/facemasks" render={()=><FaceMasks faceMasks={faceMasks} manufacturers={manufacturers}/>}/>
-        <Route path="/beanies" render={()=><Beanies beanies={beanies} manufacturers={manufacturers}/>}/>
-      </div>
+        <Navbar/>
+        
+        <div>
+          <Redirect exact from="/" to="/gloves" />
+          <Route path="/gloves" render={()=><Gloves gloves={gloves} manufacturers={manufacturers}/>}/>
+          <Route path="/facemasks" render={()=><FaceMasks faceMasks={faceMasks} manufacturers={manufacturers}/>}/>
+          <Route path="/beanies" render={()=><Beanies beanies={beanies} manufacturers={manufacturers}/>}/>
+        </div>
         
       </Router>
       

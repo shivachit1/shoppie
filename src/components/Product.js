@@ -1,19 +1,24 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-const Product = ({product,style, manufacturers}) => {
+const Product = ({product, style, manufacturers}) => {
     
-    const [availability, setAvailability] = useState()
+    // state for product availability
+    const [availability, setAvailability] = useState('checking stock ...')
 
     useEffect(()=>{
-        const manu = manufacturers.find(manufacturer => manufacturer.name === product.manufacturer)
-        const stockCheck = manu.values.find((value) => {
+        if(manufacturers.length !== 0){
+            // getting all manufacturer products of given product.manufacturer
+            const manu = manufacturers.find(manufacturer => manufacturer.name === product.manufacturer)
+            // finding single product from array which matches the product id
+            const stockCheck = manu.values.find((value) => {
             if(value.id.toLowerCase() === product.id.toLowerCase()){
                 return value
             }
             return null
         })
-        
+
+        // slicing down DATAPAYLOAD string value to get the stock availability
         if(stockCheck !== null){
             let length = "<INSTOCKVALUE>".length
             let start = stockCheck.DATAPAYLOAD.indexOf("<INSTOCKVALUE>")
@@ -22,7 +27,9 @@ const Product = ({product,style, manufacturers}) => {
             setAvailability(stockValue)
         }
 
-    },[])
+        }
+
+    },[product,manufacturers])
 
     return(
         <div style={style}>
@@ -37,7 +44,7 @@ const Product = ({product,style, manufacturers}) => {
                 <span key={color} className="color" style={{background:color}}></span>
             ))}
             </div>
-            <p className="button">{availability}</p>
+            <p className="green-text">{availability}</p>
             <p>Category: {product.type}</p>
             <p className="small-text">product ID: {product.id}</p>
         </div>
