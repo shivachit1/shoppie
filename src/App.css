@@ -58,8 +58,13 @@ h2{
   align-items: center;
   margin: 16px;
   padding: 4px;
-  border-radius: 20px;
-  background-color: rgba(164, 155, 170, 0.562);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 4px rgba(0,0,0,0.2);
+}
+.product:hover{
+    box-shadow: 4px 16px 16px 0 rgba(0,0,0,0.2);
+    background-color: rgba(238, 120, 90, 0.26);
+    scale: 1.5;
 }
 
 .green-text{
