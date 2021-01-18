@@ -1,21 +1,24 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect } from 'react'
+import { useState } from 'react'
 
-const Product = ({product, style, manufacturers}) => {
+const Product = ({ product, style, manufacturers }) => {
     
     // state for product availability
     const [availability, setAvailability] = useState('checking stock ...')
 
     useEffect(()=>{
         if(manufacturers.length !== 0){
+            
             // getting all manufacturer products of given product.manufacturer
             const manu = manufacturers.find(manufacturer => manufacturer.name === product.manufacturer)
+            
             // finding single product from array which matches the product id
             const stockCheck = manu.values.find((value) => {
             if(value.id.toLowerCase() === product.id.toLowerCase()){
                 return value
             }
             return null
+
         })
 
         // slicing down DATAPAYLOAD string value to get the stock availability
@@ -23,7 +26,7 @@ const Product = ({product, style, manufacturers}) => {
             let length = "<INSTOCKVALUE>".length
             let start = stockCheck.DATAPAYLOAD.indexOf("<INSTOCKVALUE>")
             let end = stockCheck.DATAPAYLOAD.indexOf("</INSTOCKVALUE>")
-            let stockValue = stockCheck.DATAPAYLOAD.slice(start+length,end)
+            let stockValue = stockCheck.DATAPAYLOAD.slice( start + length, end)
             setAvailability(stockValue)
         }
 
