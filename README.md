@@ -4,7 +4,7 @@
 <a href="https://shoppie-app.herokuapp.com/" target="_blank">https://shoppie-app.herokuapp.com/</a>
 </br></br>
 <div style="margin-top:70px;">
-    <strong>Build using: React.js, react-window</strong>
+    <strong>Build using: React.js, react-window, react-virtualized</strong>
 </div>
 
 <div style={margin-top:70px;}>
