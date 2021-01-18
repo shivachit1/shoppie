@@ -1,10 +1,8 @@
 <h2>Shoppie</h2>
-<p>Web app for clothing store</p>
-<a href=""></a>
+<h4>Web app for clothing store</h4>
+<a href="https://shoppie-app.herokuapp.com/" target="_blank">https://shoppie-app.herokuapp.com/</a>
 <div style="margin-top:30px;">
-<p>Assingment given by: Reaktor</p>
-<p>Position: junior developer</p>
-<p>Build using: React.js, react-window</p>
+<strong>Build using: React.js, react-window</strong>
 </div>
 
 <div style="margin-top:50px;">
@@ -14,7 +12,7 @@
 
 <div style="margin-top:70px;">
     <h4>Api used: </h4>
-    <p>API Url: <strong>https://bad-api-assignment.reaktor.com/</strong></p>
+    <strong>API Url: https://bad-api-assignment.reaktor.com/</strong></p>
     <p><strong>GET /v2/products/:category </strong> – Return a listing of products in a given category.</p>
     <p><strong>GET /v2/availability/:manufacturer </strong> – Return a list of availability info.</p>
 </div>
